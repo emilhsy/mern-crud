@@ -4,6 +4,7 @@ import { useProductStore } from '../store/product';
 import { Toaster, toaster } from "@/components/ui/toaster"
 
 const CreatePage = () => {
+    
   const [newProduct, setNewProduct] = useState({
     name: "",
     price: "",
@@ -34,11 +35,11 @@ const CreatePage = () => {
     <Container maxW='container.sm' w='full'>
         <Toaster />
         <VStack spacing={8}>
-            <Heading as='h1' size='2xl' textAlign='center' mb={8}>
+            <Heading as='h1' size='xl' textAlign='center' mt={8} fontWeight='bold'>
                 Create new product
             </Heading>
 
-            <Box w='full' p={6} rounded='lg' shadow='md'>
+            <Box maxW='xl' w='full' p={2} rounded='lg' shadow='md'>
                 <VStack spacing={4}>
                     <Input 
                         placeholder='Product name'
@@ -59,7 +60,7 @@ const CreatePage = () => {
                         value={newProduct.image}
                         onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
                     />
-                    <Button colorScheme='blue' onClick={handleAddProduct} w='full'>
+                    <Button bgColor='blue.500' color='white' onClick={handleAddProduct} w='full'>
                         Add product
                     </Button>
                 </VStack>

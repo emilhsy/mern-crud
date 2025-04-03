@@ -9,20 +9,11 @@ const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Container maxW='x1' px={4}>
-      <Flex
-        h={16}
-        alignItems='center'
-        justifyContent='space-between'
-      >
+    <Container maxW='5xl' px={4}>
+      <Flex h={16} alignItems='center' justifyContent='space-between'>
 
-        <Text
-          textStyle='lg'
-          fontWeight='bold'
-          textTransform='uppercase'
-        >
+        <Text textStyle='xl' fontWeight='bold' textTransform='uppercase'>
           <Link to={"/"}>Product Store</Link>
-
         </Text>
 
         <HStack>
