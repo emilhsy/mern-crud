@@ -1,5 +1,5 @@
-import { Box, Image, Heading, Text, HStack, Button } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Image, Heading, Text, HStack, Button, Dialog, Portal,  VStack, Input } from '@chakra-ui/react'
+import React, { useState } from 'react'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useProductStore } from '../store/product';
@@ -7,7 +7,9 @@ import { Toaster, toaster } from "@/components/ui/toaster"
 
 const ProductCard = ({product}) => {
 
-    const { deleteProduct } = useProductStore();
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [ updatedProduct, setUpdatedProduct ] = useState(product);
+    const { deleteProduct, updateProduct } = useProductStore();
     const handleDeleteProduct = async(pid) => {
         const { success, message } = await deleteProduct(pid)
         if(!success) {
@@ -24,6 +26,24 @@ const ProductCard = ({product}) => {
             })
         }
     };
+
+    const handleUpdateProduct = async(pid, updatedProduct) => {
+        const { success, message } = await updateProduct(pid, updatedProduct);
+        setIsDialogOpen(false);
+        if(!success) {
+            toaster.create({
+                title: "Error",
+                description: message,
+                type: "error",
+            })
+        } else {
+            toaster.create({
+                title: "Success",
+                description: "Product updated successfully",
+                type: "success",
+            })
+        }
+    }
 
   return (
     <Box
@@ -46,11 +66,52 @@ const ProductCard = ({product}) => {
             </Text>
 
             <HStack spacing={2}>
-                <Button bgColor='blue'><FaEdit /></Button>
-                <Button bgColor='red' onClick={() => handleDeleteProduct(product._id)}><MdDelete /></Button>
+                <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen} size="cover" motionPreset="slide-in-bottom">
+                    <Dialog.Trigger asChild>
+                        <Button bgColor='blue' color='white' onClick={() => setIsDialogOpen(true)}><FaEdit /></Button>
+                    </Dialog.Trigger>
+                    <Portal>
+                        <Dialog.Positioner>
+                            <Dialog.Content>
+                                <Dialog.Header>
+                                    <Dialog.Title>Update product</Dialog.Title>
+                                </Dialog.Header>
+                                <Dialog.Body>
+                                    <VStack spacing={4}>
+                                        <Input
+                                            placeholder='Product Name'
+                                            name='name'
+                                            value={updatedProduct.name}
+                                            onChange={(e) => setUpdatedProduct({ ...updatedProduct, name: e.target.value })}
+                                        />
+                                        <Input
+                                            placeholder='Price'
+                                            name='price'
+                                            type='number'
+                                            value={updatedProduct.price}
+                                            onChange={(e) => setUpdatedProduct({ ...updatedProduct, price: e.target.value })}
+                                        />
+                                        <Input
+                                            placeholder='Image URL'
+                                            name='image'
+                                            value={updatedProduct.image}
+                                            onChange={(e) => setUpdatedProduct({ ...updatedProduct, image: e.target.value })}
+                                        />
+                                    </VStack>
+                                </Dialog.Body>
+                                <Dialog.Footer>
+                                    <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
+                                    <Button bgColor='blue' color='white' onClick={() => handleUpdateProduct(product._id, updatedProduct)}>Update</Button>
+                                </Dialog.Footer>
+                            </Dialog.Content>
+                        </Dialog.Positioner>
+                    </Portal>
+                </Dialog.Root>
+                <Button bgColor='red' color='white' onClick={() => handleDeleteProduct(product._id)}><MdDelete /></Button>
             </HStack>
         </Box>
     </Box>
+
   )
 }
 
