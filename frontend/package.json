@@ -13,6 +13,7 @@
     "@chakra-ui/provider": "^2.4.2",
     "@chakra-ui/react": "^3.15.0",
     "@emotion/react": "^11.14.0",
+    "mern": "file:..",
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
