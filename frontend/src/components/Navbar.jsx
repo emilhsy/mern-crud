@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Flex, Text, Link, HStack, Button } from "@chakra-ui/react"
 import { CiSquarePlus } from "react-icons/ci"
-import { FaMoon, FaSun } from "react-icons/fa"
+import { FaMoon, FaSun, FaShoppingCart } from "react-icons/fa"
 import { useColorMode } from "@/components/ui/color-mode"
 
 const Navbar = () => {
@@ -26,7 +26,7 @@ const Navbar = () => {
           textAlign={"center"}
           bgClip={"text"}
         >
-          <Link to={"/"}>Product Store</Link>
+          <Link to={"/"}>Product Store <FaShoppingCart /></Link>
 
         </Text>
 
