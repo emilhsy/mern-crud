@@ -1,3 +1,5 @@
+![screenshot](app.png)
+
 * Tech Stack
 
 Frontend: React.js, Chakra UI
